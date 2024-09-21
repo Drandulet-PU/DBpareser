@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body %}
+<body>
+	<div class="data">
+		<h1>{{ head[0] }}</h1>
+		
+		<form action="{{ url_for('change_teachers', id_3=id_3, id_2=id_2, delete=1) }}" method="POST" style="display:inline;">
+			<button type="submit">Ликвидировать учителя</button>
+		</form>
+		
+		<form method="POST">
+			<h2>Личная информация</h2>
+			
+			<label for="name">Имя:</label><br>
+			<input type="text" id="name" name="name" value="{{ head[0] }}"><br><br>
+			
+			<label for="work_place">Место работы:</label><br>
+			<input type="text" id="work_place" name="work_place" value="{{ head[1] }}"><br><br>
+			
+			<label for="job_title">Должность:</label><br>
+			<input type="text" id="job_title" name="job_title" value="{{ head[2] }}"><br><br>
+			
+			<label for="gak">Является членом гак:</label><br>
+			<select id="gak" name="gak">
+				<option value="1" {% if head[3] == 1 %}selected{% endif %}>Да</option>
+				<option value="0" {% if head[3] == 0 %}selected{% endif %}>Нет</option>
+			</select>
+			
+			<h2>Оценки</h2>
+			
+			{% for i in body %}
+			<label for="{{ i[0] }}">{{ i[1] }}:</lable><br>
+			<input type="number" min=1, max=5 id="{{ i[0] }}" name="{{ i[0] }}" value="{{ i[2] }}"><br><br>
+			{% endfor %}
+			
+			<button type="submit">Сохранить</button>
+		</form>
+		<br>
+		<a href="{{ url_for('show_table', id_3=id_3) }}">Вернуться к таблице</a>
+	</div>
+</body>
+{% endblock %}

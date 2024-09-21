@@ -1,0 +1,31 @@
+<!doctype html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>DBparser</title>
+	<h1>DBparser</h1>
+	
+	<script>
+        function redirectToOption() {
+            var option = document.getElementById("options").value;
+            if (option) {
+                window.location.href = option; // Переход по URL, указанному в value
+            }
+        }
+    </script>
+</head>
+<body>
+    <form class="dropdown-form" action="{{ url_for('create_group', id_3=0) }}">
+        <select id="options" name="options" onchange="redirectToOption()">
+            <option value="">-- Выберите вариант --</option>
+            {% for i in groups %}
+            <option value="{{ url_for('show_table', id_3=i[0]) }}">{{ i[1] }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">+</button>
+    </form>
+
+    <h2>{{ g.error }}</h2>
+    {% block body %}
+    {% endblock %}
+</body>

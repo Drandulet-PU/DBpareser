@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block body %}
+<body>
+    <div class="header">
+        <h2>{{ group }}</h2>
+        <div class="header-buttons">
+            <form action="{{ url_for('create_group', id_3=id_3) }}">
+                <button type="submit">✎️</button>
+            </form>
+            <form action="{{ url_for('show_table', id_3=id_3, delete=1) }}" method="POST">
+                <button type="submit">🗑️</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="tables-container">
+        <div class="table-wrapper">
+			<div class="table-with-button">
+				<div class="table-and-button">
+					<table border="1">
+						<thead>
+							<tr>
+								<th class="td-min-width">Ученики/Учителя</th>
+								{% for i in head %}
+								<th class="td-min-width"><a href="{{ url_for('change_teachers', id_3=id_3, id_2=i[0]) }}">{{ i[1] if i[1] else '__' }}</a></th>
+								{% endfor %}
+								<th class="td-min-width"><a href="{{ url_for('show_table', id_3=id_3, teachers=teachers, students=(students + 1) % 3) }}">⇅</a></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in body %}
+							<tr>
+								<th><a href="{{ url_for('change_students', id_3=id_3, id_1=i[0]) }}">{{ i[1] if i[1] else '__' }}</a></th>
+								{% for ii in i[2:] %}
+								<td>{{ ii if ii else '' }}</td>
+								{% endfor %}
+							</tr>
+							{% endfor %}
+							<tr>
+								<th><a href="{{ url_for('show_table', id_3=id_3, teachers=(teachers + 1) % 3, students=students) }}">⇅</a></th>
+								{% for i in head %}
+								<td>{{ i[2] }}</td>
+								{% endfor %}
+							</tr>
+						</tbody>
+					</table>
+					<!-- Кнопка "Добавить" сразу после таблицы -->
+					<form class="add-button-right" action="{{ url_for('change_teachers', id_3=id_3, id_2=0) }}">
+						<button type="submit">Добавить</button>
+					</form>
+				</div>
+				<form class="add-button-after-table" action="{{ url_for('change_students', id_3=id_3, id_1=0) }}">
+                    <button type="submit">Добавить</button>
+                </form>
+			</div>
+        </div>
+
+        <div class="table-wrapper">
+            <div class="table-with-button">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th class="td-min-width">Имя</th>
+                            <th class="td-min-width">Место работы</th>
+                            <th class="td-min-width">Должность</th>
+                            <th class="td-min-width">Член ГАК</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in teachers_table %}
+                        <tr>
+                            <th><a href="{{ url_for('change_teachers', id_3=id_3, id_2=i[0]) }}">{{ i[1] if i[1] else '__' }}</a></th>
+                            {% for ii in i[2:-1] %}
+                            <td>{{ ii if ii else '' }}</td>
+                            {% endfor %}
+                            <td>{{ 'Да' if i[-1] else 'Нет' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <form class="add-button-after-table" action="{{ url_for('change_teachers', id_3=id_3, id_2=0) }}">
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <div class="table-with-button">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th class="td-min-width">Имя</th>
+                            <th class="td-min-width">Тема доклада</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in students_table %}
+                        <tr>
+                            <th><a href="{{ url_for('change_students', id_3=id_3, id_1=i[0]) }}">{{ i[1] if i[1] else '__' }}</a></th>
+                            {% for ii in i[2:] %}
+                            <td>{{ ii if ii else '' }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <form class="add-button-after-table" action="{{ url_for('change_students', id_3=id_3, id_1=0) }}">
+                    <button type="submit">Добавить</button>
+                </form>
+            </div> 
+        </div>
+    </div>
+</body>
+{% endblock %}

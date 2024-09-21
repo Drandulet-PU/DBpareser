@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+<body>
+	<div class="data">
+		<h1>{{ head[0] }}</h1>
+		
+		<form action="{{ url_for('change_students', id_3=id_3, id_1=id_1, delete=1) }}" method="POST">
+			<button type="submit">Ликвидировать ученика</button>
+		</form>
+		
+		<form method="POST">
+			<h2>Личная информация</h2>
+			
+			<label for="name">Имя:</label><br>
+			<input type="text" id="name" name="name" value="{{ head[0] }}"><br><br>
+			
+			<label for="topic">Тема диссертации:</label><br>
+			<input type="text" id="topic" name="topic" value="{{ head[1] }}"><br><br>
+			
+			<h2>Оценки</h2>
+			
+			{% for i in body %}
+			<label for="{{ i[0] }}">{{ i[1] }}:</lable><br>
+			<input type="number"  id="{{ i[0] }}" name="{{ i[0] }}" value="{{ i[2] }}"><br><br>
+			{% endfor %}
+			
+			<button type="submit">Сохранить</button>
+		</form>
+		<br>
+		<a href="{{ url_for('show_table', id_3=id_3) }}">Вернуться к таблице</a>
+	</div>
+</body>
+{% endblock %}
