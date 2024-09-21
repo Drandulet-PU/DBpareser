@@ -5,7 +5,7 @@ from db import get_db
 
 def create_app():
     DATABASE = 'diplom.db'
-    DEBUG = True
+    #DEBUG = True
     SECRET_KEY = 'development key'
 
     # обновляет конфиг
@@ -33,4 +33,4 @@ def init_db():
             
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    app.run()
